@@ -1,8 +1,6 @@
 import clsx from "clsx";
 
 import { ChatKitPanel } from "./ChatKitPanel";
-import { FactCard } from "./FactCard";
-import { ThemeToggle } from "./ThemeToggle";
 import { ColorScheme } from "../hooks/useColorScheme";
 import { useFacts } from "../hooks/useFacts";
 
@@ -13,79 +11,54 @@ export default function Home({
   scheme: ColorScheme;
   handleThemeChange: (scheme: ColorScheme) => void;
 }) {
-  const { facts, refresh, performAction } = useFacts();
+  const { refresh, performAction } = useFacts();
 
   const containerClass = clsx(
-    "min-h-screen bg-gradient-to-br transition-colors duration-300",
-    scheme === "dark"
-      ? "from-slate-900 via-slate-950 to-slate-850 text-slate-100"
-      : "from-slate-100 via-white to-slate-200 text-slate-900"
+    "min-h-screen w-full bg-gradient-to-br from-indigo-950 via-purple-800 to-blue-800 text-slate-100 transition-colors duration-500",
+    scheme === "dark" ? "brightness-110" : "brightness-100"
   );
 
   return (
     <div className={containerClass}>
-      <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col-reverse gap-10 px-6 pt-4 pb-10 md:py-10 lg:flex-row">
-        <div className="relative w-full md:w-[45%] flex h-[90vh] items-stretch overflow-hidden rounded-3xl bg-white/80 shadow-[0_45px_90px_-45px_rgba(15,23,42,0.6)] ring-1 ring-slate-200/60 backdrop-blur md:h-[90vh] dark:bg-slate-900/70 dark:shadow-[0_45px_90px_-45px_rgba(15,23,42,0.85)] dark:ring-slate-800/60">
-          <ChatKitPanel
-            theme={scheme}
-            onWidgetAction={performAction}
-            onResponseEnd={refresh}
-            onThemeRequest={handleThemeChange}
-          />
-        </div>
-        <section className="flex-1 space-y-8 py-8">
-          <header className="space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="space-y-3">
-                <h1 className="text-3xl font-semibold sm:text-4xl">
-                  ChatKit starter app
-                </h1>
-                <p className="max-w-xl text-sm text-slate-600 dark:text-slate-300">
-                  This demo focuses on teaching ChatKit concepts and collecting
-                  short, declarative facts about the user. Swap the base
-                  instructions in
-                  <code className="mx-1 rounded bg-slate-200 px-1.5 py-0.5 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-                    app/constants.py
-                  </code>
-                  to experiment with different behaviours.
-                </p>
+      <div className="mx-auto flex min-h-screen w-full items-center justify-center px-4 py-6 sm:px-6">
+        <div className="relative flex h-[calc(100vh-3rem)] w-full max-w-[430px] flex-col overflow-hidden rounded-[32px] bg-white/85 text-slate-900 shadow-[0_25px_80px_-35px_rgba(0,0,0,0.6)] ring-1 ring-white/30 backdrop-blur dark:bg-slate-950/80 dark:text-slate-50 dark:ring-slate-900/40">
+          <div className="absolute inset-x-6 top-0 h-24 bg-gradient-to-b from-white/20 via-white/10 to-transparent blur-3xl" aria-hidden />
+
+          <header className="relative z-10 flex items-center justify-between gap-4 px-5 py-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-400 to-blue-400 text-lg font-semibold text-white shadow-md ring-2 ring-white/60">
+                M
               </div>
-              <ThemeToggle value={scheme} onChange={handleThemeChange} />
+              <div className="space-y-0.5">
+                <p className="text-xs uppercase tracking-wide text-indigo-400 dark:text-indigo-300">
+                  online / ik luister
+                </p>
+                <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-50">
+                  Matti
+                </h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="rounded-full border border-indigo-100/60 bg-indigo-500/10 px-3.5 py-2 text-sm font-semibold text-indigo-800 shadow-sm backdrop-blur transition hover:bg-indigo-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 dark:border-indigo-400/40 dark:text-indigo-100 dark:hover:bg-indigo-500/25">
+                SOS
+              </button>
+              <button className="rounded-full border border-white/50 bg-white/10 px-3 py-2 text-sm font-medium text-slate-800 shadow-sm backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:border-slate-800/70 dark:bg-slate-900/60 dark:text-slate-100 dark:hover:bg-slate-800/70">
+                Info
+              </button>
             </div>
           </header>
 
-          <div>
-            <h2 className="text-lg font-semibold text-slate-700 dark:text-slate-200">
-              Saved facts
-            </h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Facts appear here after you share them in the conversation.
-            </p>
-            <div className="mt-6">
-              <div className="rounded-3xl border border-slate-200/60 bg-white/70 shadow-[0_35px_90px_-55px_rgba(15,23,42,0.45)] ring-1 ring-slate-200/50 backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/50 dark:shadow-[0_45px_95px_-60px_rgba(15,23,42,0.85)] dark:ring-slate-900/60">
-                <div className="max-h-[50vh] overflow-y-auto p-6 sm:max-h-[40vh]">
-                  {facts.length === 0 ? (
-                    <div className="flex flex-col items-start justify-center gap-3 text-slate-600 dark:text-slate-300">
-                      <span className="text-base font-medium text-slate-700 dark:text-slate-200">
-                        No facts saved yet.
-                      </span>
-                      <span className="text-sm text-slate-500 dark:text-slate-400">
-                        Start a conversation in the chat to record your first
-                        fact.
-                      </span>
-                    </div>
-                  ) : (
-                    <ul className="list-none space-y-3">
-                      {facts.map((fact) => (
-                        <FactCard key={fact.id} fact={fact} />
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
+          <main className="relative z-10 flex flex-1 flex-col px-5 pb-5">
+            <div className="flex-1 overflow-hidden rounded-2xl bg-gradient-to-b from-indigo-50/70 via-white/60 to-white/80 p-2 shadow-inner ring-1 ring-white/40 backdrop-blur-sm dark:from-slate-900/60 dark:via-slate-900/40 dark:to-slate-950/60 dark:ring-slate-800/60">
+              <ChatKitPanel
+                theme={scheme}
+                onWidgetAction={performAction}
+                onResponseEnd={refresh}
+                onThemeRequest={handleThemeChange}
+              />
             </div>
-          </div>
-        </section>
+          </main>
+        </div>
       </div>
     </div>
   );
