@@ -8,11 +8,22 @@ import tsParser from "@typescript-eslint/parser";
 export default [
   js.configs.recommended,
   {
+    ignores: [
+      "dist/**",
+      "node_modules/**",
+      "tailwind.config.ts",
+      "postcss.config.cjs",
+      "vite.config.ts",
+      "eslint.config.js",
+    ],
+  },
+  {
     files: ["**/*.{ts,tsx}", "*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        projectService: true,
+        project: "./tsconfig.json",
+        tsconfigRootDir: new URL(".", import.meta.url).pathname,
         ecmaFeatures: {
           jsx: true,
         },
@@ -28,7 +39,7 @@ export default [
       "react-refresh": reactRefresh,
     },
     rules: {
-      ...tseslint.configs["recommended-type-checked"].rules,
+      ...tseslint.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },

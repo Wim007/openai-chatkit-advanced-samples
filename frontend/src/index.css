@@ -8,11 +8,16 @@
   }
 
   body {
-    @apply m-0 min-h-screen font-sans bg-surface-light text-slate-900 transition-colors;
+    @apply m-0 min-h-screen overflow-hidden font-sans bg-surface-light text-slate-900 transition-colors;
   }
 
   .dark body {
     @apply bg-surface-dark text-slate-100;
+  }
+
+  html,
+  #root {
+    @apply h-full overflow-hidden;
   }
 
   a {
